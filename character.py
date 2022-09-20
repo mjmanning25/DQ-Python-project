@@ -410,7 +410,7 @@ class Character:
         print("WIP")
 
     def createRandomName(self):
-        lines = open('names.txt').read().splitlines()
+        lines = open('./names.txt').read().splitlines()
         return random.choice(lines)
 
     def createRandom(self, name):
