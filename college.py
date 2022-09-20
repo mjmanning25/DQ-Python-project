@@ -16,10 +16,13 @@ class College:
 
     def getGKSpells(self):
         return self.gkspells
+
     def getGKRituals(self):
         return self.gkrituals
+
     def getSKSpells(self):
         return self.skspells
+
     def getSKRituals(self):
         return self.skrituals
 
