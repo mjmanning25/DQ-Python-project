@@ -28,4 +28,6 @@ class College:
     #gk counter too
     #use name as a flag, if flag return different sets of spells
     #use a file to show what is known, read file
-    
+
+
+# add spells per college
