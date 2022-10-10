@@ -17,7 +17,8 @@ allStats = [
     "ps", "md", "ag",
     "ma", "wp", "en",
     "ft", "pc", "tmr",
-    "ht", "wt", "pb"
+    "ht", "wt", "pb",
+    "ep"
     ]
 
 
@@ -170,6 +171,11 @@ def getStat(stat):
             print(selectedChar.getWeight())
         elif(stat.lower() == "pb"):
             print(selectedChar.getBeauty())
+        elif(stat.lower() == "ep"):
+            print(selectedChar.ep)
+        elif(stat.lower() == "advep"):
+            print(selectedChar.advep)
+
     else:
         print("Selectable stats are:")
         print(*allStats, sep=", ")
@@ -214,6 +220,10 @@ def setStat(stat, value):
         elif(stat.lower() == "pb"):
             selectedChar.setBeauty(value)
             print("Set to: " + str(selectedChar.getBeauty()))
+        #----------------------------------------------------
+        elif(stat.lower() == "ep"):
+            selectedChar.ep = value
+            print("Set to: " + str(selectedChar.ep))
     else:
         print("Incorrect stat or value, please use the following:")
         print(*allStats, sep=", ")
@@ -277,6 +287,13 @@ def modStat(stat, value):
             selectedChar.setTMR(newValue)
             print("Updated from: " + str(oldValue)
                   + " to: " + str(selectedChar.getTMR()))
+        #----------------------------------------------------
+        elif(stat.lower() == "ep"):
+            oldValue = selectedChar.ep
+            newValue = oldValue + value
+            selectedChar.ep = newValue
+            print("Updated from: " + str(oldValue)
+                  + " to: " + str(selectedChar.ep))
     else:
         print("Incorrect stat or value, please use the following:")
         print(*allStats, sep=", ")
@@ -316,6 +333,9 @@ def showStats():
     print("Natural Armour: " + str(selectedChar.getNaturalArmour()))
     print("--------------------------------")
     getRacialAbilities()
+    print("--------------------------------")
+    print("EP Remaining: " + str(selectedChar.ep))
+    print("Adventure Skill EP Remaining: " + str(selectedChar.advep))
     print("--------------------------------")
     myInput()
 

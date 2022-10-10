@@ -1,13 +1,4 @@
-import language
-import college
-import item
-import adventureskill
-import talent
-import spell
-import transformation
-import character
 import raceability
-import formula
 
 import random
 
@@ -40,6 +31,8 @@ class Character:
         self.name = name
         self.rabilities = []  # racial abilities list
         self.adventureskills = []  # adventure skills list
+        self.ep = 0
+        self.advep = 0
 
     def getLevel(self):
         return self.level
@@ -225,6 +218,8 @@ class Character:
         self.calcSexMod(self.sex)
         self.calcFt(self.en)
         self.calcRacial(self.race)
+        self.ep = 2500
+        self.advep = 1250
 
     def setAllBaseStats(self):
         self.ps = int(input("PS: "))
@@ -379,7 +374,7 @@ class Character:
 
     def calcSexMod(self, sex):
         if(sex.lower() == "female"):
-            self.pc -= 2
+            self.ps -= 2
             self.md += 1
             self.en += 1
 
@@ -423,12 +418,12 @@ class Character:
             self.name = self.createRandomName()
         else:
             self.name = name
-        self.ps = int(random.randrange(12, 17))
-        self.md = int(random.randrange(12, 17))
-        self.ag = int(random.randrange(12, 17))
-        self.ma = int(random.randrange(12, 17))
-        self.wp = int(random.randrange(12, 17))
-        self.en = int(random.randrange(12, 17))
+        self.ps = int(random.randrange(13, 16))
+        self.md = int(random.randrange(13, 16))
+        self.ag = int(random.randrange(13, 16))
+        self.ma = int(random.randrange(13, 16))
+        self.wp = int(random.randrange(13, 16))
+        self.en = int(random.randrange(13, 16))
         self.ft = int(0)
         self.pc = int(5)
         self.tmr = int(5)
@@ -468,6 +463,8 @@ class Character:
         self.calcSexMod(self.sex)
         self.calcFt(self.en)
         self.calcRacial(self.race)
+        self.ep = 2500
+        self.advep = 1250
 
     #generate a random player character
     #generate stats
