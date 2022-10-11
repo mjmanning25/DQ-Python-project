@@ -228,6 +228,7 @@ class Character:
         self.calcRacial(self.race)
         self.setEP(2500)
         self.advep = 1250
+        self.ht = self.calcHeightAndWeight()
 
     def setAllBaseStats(self):
         self.ps = int(input("PS: "))
@@ -406,8 +407,7 @@ class Character:
         else:
             self.ft = 24
 
-    def calcHeightAndWeight():
-        print("WIP")
+    def calcHeightAndWeight(self):
         #list of heights - normal
         listNormalHeights = [
             "5'3", "5'4", "5'5",
@@ -415,32 +415,101 @@ class Character:
             "5'9", "5'10", "5'11",
             "6'0", "6'1", "6'2", "6'3"
         ]
+        listShortHeights = [
+            "3'9", "3'10", "3'11",
+            "4'0", "4'1", "4'2",
+            "4'3", "4'4", "4'5",
+            "4'6", "4'7", "4'8", "4'9"
+        ]
+        listGiantHeights = [
+            "5'3", "5'4", "5'5",
+            "5'6", "5'7", "5'8",
+            "5'9", "5'10", "5'11",
+            "6'0", "6'1", "6'2", "6'3"
+        ]
+
+        normHeight = random.choice(listNormalHeights)
+        shortHeight = random.choice(listShortHeights)
+        giantHeight = random.choice(listGiantHeights)
 
         #each height gets a range of weights
         #has to be done in sets of 3 bc this game is bs
-        if(self.getRace == "human" or self.getRace == "shapechanger"):
-            tempHeight = random.choice(listNormalHeights)
-            if(self.getSex() == "male"):
-                pass
-        if(self.getRace == "orc"):
-        if(self.getRace == "elf"):
+        if(self.getRace() == "human" or self.getRace() == "shapechanger"):
 
-            #adjustments - offset the array increment
+            if(self.getSex() == "male"):
+                return (random.choice(listNormalHeights))
+            if(self.getSex() != "male"):  # female, -4 inches
+                return (self.calcNegHeightOffset(normHeight, 4))
+
+        if(self.getRace() == "orc"):
+            if(self.getSex() == "male"):  # male -4
+                return (self.calcNegHeightOffset(normHeight, 4))
+
+            if(self.getSex() != "male"):  # female -6 inches
+                return (self.calcNegHeightOffset(normHeight, 6))
+
+        if(self.getRace() == "elf"):
+            if(self.getSex() == "male"):  # male +4 inches
+                return (self.calcPosHeightOffset(normHeight, 5))
+
+            if(self.getSex() != "male"):  # female +2 inches
+                return (self.calcPosHeightOffset(normHeight, 2))
 
             #list of heights - shortfolk
-        if(self.getRace == "dwarf"):
-        if(self.getRace == "halfling"):
+        if(self.getRace() == "dwarf"):
+            if(self.getSex() == "male"):
+                return (random.choice(listShortHeights))
 
-            #each height gets a range of weights
+            if(self.getSex() != "male"):  # female -2 inches
+                return (self.calcNegHeightOffset(shortHeight, 2))
 
-            #adjustments
+        if(self.getRace() == "halfling"):
+            if(self.getSex() == "male"):  # male -12
+                return (self.calcNegHeightOffset(shortHeight, 12))
+
+            if(self.getSex() != "male"):  # female -13 inches
+                return (self.calcNegHeightOffset(shortHeight, 13))
 
             #list of heights - giants
-        if(self.getRace == "hill giant"):
+        if(self.getRace() == "hill giant"):
+            if(self.getSex() == "male"):
+                return (random.choice(listGiantHeights))
 
-            #each height gets a range of weights
+            if(self.getSex() != "male"):  # female -4 inches
+                return (self.calcNegHeightOffset(giantHeight, 4))
 
-            #adjustments
+    def calcNegHeightOffset(self, height, offset):
+        newheight = height.split("'")  # split the ft and inches
+        feet = int(newheight[0])
+        inches = int(newheight[1])
+        # check modulus of 12, to remove a foot
+        if(offset % 12 == 1):
+            feet -= 1
+        elif(offset >= inches):  # height 6'3 minus 8 inches, example.
+            inches -= offset  # inches = -5
+            if (inches <= 0):  # true
+                feet -= 1  # height is 5'-5
+                inches = (12+inches)  # height is 5'(12-5) so 5'7
+        else:
+            inches -= offset
+
+        return str(feet)+"'"+str(inches)
+
+    def calcPosHeightOffset(self, height, offset):
+        newheight = height.split("'")  # split the ft and inches
+        feet = int(newheight[0])
+        inches = int(newheight[1])
+        # check modulus of 12, to remove a foot
+        newheight = inches+offset  # 5'11 + 5 inches, example
+        if(newheight % 12 == 1):  # check if you gain a foot
+            feet += 1
+        elif(newheight >= 12):  # true - 16
+            feet += 1  # now 6'11
+            inches += (offset-12)  # now 6'11 + (5-12), -7 = (11-7=4)
+        else:
+            inches += offset
+
+        return str(feet)+"'"+str(inches)
 
     def createRandomName(self):
         lines = open('names.txt').read().splitlines()
@@ -486,7 +555,6 @@ class Character:
         else:
             self.hand = "right"
         #look into this later
-        self.ht = "6'0 - adjust me"
         self.wt = int(random.randrange(65, 150))
         # 4d5+3 = pb
         d1 = random.randrange(1, 5)
@@ -503,6 +571,7 @@ class Character:
         self.calcRacial(self.race)
         self.setEP(2500)
         self.advep = 1250
+        self.ht = self.calcHeightAndWeight()
 
     #generate a random player character
     #generate stats

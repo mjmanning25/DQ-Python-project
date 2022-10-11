@@ -1,6 +1,3 @@
-import pickle
+import character
 
-with open('char.file', 'rb') as Char:
-    myChar = pickle.load(Char)
-    Char.close()
-    print(myChar.getName())
+print(character.calcPosHeightOffset("5'11", 5))
