@@ -172,7 +172,7 @@ def getStat(stat):
         elif(stat.lower() == "pb"):
             print(selectedChar.getBeauty())
         elif(stat.lower() == "ep"):
-            print(selectedChar.ep)
+            print(selectedChar.getEP())
         elif(stat.lower() == "advep"):
             print(selectedChar.advep)
 
@@ -222,8 +222,8 @@ def setStat(stat, value):
             print("Set to: " + str(selectedChar.getBeauty()))
         #----------------------------------------------------
         elif(stat.lower() == "ep"):
-            selectedChar.ep = value
-            print("Set to: " + str(selectedChar.ep))
+            selectedChar.setEP(value)
+            print("Set to: " + str(selectedChar.getEP()))
     else:
         print("Incorrect stat or value, please use the following:")
         print(*allStats, sep=", ")
@@ -293,7 +293,7 @@ def modStat(stat, value):
             newValue = oldValue + value
             selectedChar.ep = newValue
             print("Updated from: " + str(oldValue)
-                  + " to: " + str(selectedChar.ep))
+                  + " to: " + str(selectedChar.getEP()))
     else:
         print("Incorrect stat or value, please use the following:")
         print(*allStats, sep=", ")

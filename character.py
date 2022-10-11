@@ -1,4 +1,5 @@
 import raceability
+import college
 
 import random
 
@@ -211,6 +212,13 @@ class Character:
     def addColleges(self, college):
         self.colleges.append(College(college))
 
+    #Experience points----------------------------------------------------------
+    def getEP(self):
+      return self.ep
+
+    def setEP(self, ep):
+        self.ep = ep
+
     def create(self):
         self.level = "bunny"
         self.setAllBaseStats()
@@ -218,7 +226,7 @@ class Character:
         self.calcSexMod(self.sex)
         self.calcFt(self.en)
         self.calcRacial(self.race)
-        self.ep = 2500
+        self.setEP(2500)
         self.advep = 1250
 
     def setAllBaseStats(self):
@@ -398,11 +406,41 @@ class Character:
         else:
             self.ft = 24
 
-    def calcWeight():
+    def calcHeightAndWeight():
         print("WIP")
+        #list of heights - normal
+        listNormalHeights = [
+            "5'3", "5'4", "5'5",
+            "5'6", "5'7", "5'8",
+            "5'9", "5'10", "5'11",
+            "6'0", "6'1", "6'2", "6'3"
+        ]
 
-    def calcHeight():
-        print("WIP")
+        #each height gets a range of weights
+        #has to be done in sets of 3 bc this game is bs
+        if(self.getRace == "human" or self.getRace == "shapechanger"):
+            tempHeight = random.choice(listNormalHeights)
+            if(self.getSex() == "male"):
+                pass
+        if(self.getRace == "orc"):
+        if(self.getRace == "elf"):
+
+            #adjustments - offset the array increment
+
+            #list of heights - shortfolk
+        if(self.getRace == "dwarf"):
+        if(self.getRace == "halfling"):
+
+            #each height gets a range of weights
+
+            #adjustments
+
+            #list of heights - giants
+        if(self.getRace == "hill giant"):
+
+            #each height gets a range of weights
+
+            #adjustments
 
     def createRandomName(self):
         lines = open('names.txt').read().splitlines()
@@ -463,7 +501,7 @@ class Character:
         self.calcSexMod(self.sex)
         self.calcFt(self.en)
         self.calcRacial(self.race)
-        self.ep = 2500
+        self.setEP(2500)
         self.advep = 1250
 
     #generate a random player character
