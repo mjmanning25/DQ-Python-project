@@ -1,7 +1,7 @@
-import raceability
-import college
-
 import random
+import college
+import raceability
+
 
 raceList = [
     "dwarf", "elf", "halfling",
@@ -34,6 +34,8 @@ class Character:
         self.adventureskills = []  # adventure skills list
         self.ep = 0
         self.advep = 0
+        self.wt = 0
+        self.ht = "?"
 
     def getLevel(self):
         return self.level
@@ -228,7 +230,8 @@ class Character:
         self.calcRacial(self.race)
         self.setEP(2500)
         self.advep = 1250
-        self.ht = self.calcHeightAndWeight()
+        self.ht = self.calcHeight()
+        self.wt = self.calcWeight()
 
     def setAllBaseStats(self):
         self.ps = int(input("PS: "))
@@ -407,7 +410,7 @@ class Character:
         else:
             self.ft = 24
 
-    def calcHeightAndWeight(self):
+    def calcHeight(self):
         #list of heights - normal
         listNormalHeights = [
             "5'3", "5'4", "5'5",
@@ -432,52 +435,120 @@ class Character:
         shortHeight = random.choice(listShortHeights)
         giantHeight = random.choice(listGiantHeights)
 
-        #height range
-        normalRangeLower = 100
-        normalRangerUpper = 240
-        shortRangeLower = 165
-        shortRangerUpper = 170
-        giantRangeLower = 295
-        giantRangerUpper = 780
-
         # list of heights for normal size
-        if(self.getRace() == "human" or self.getRace() == "shapechanger"):
-            if(self.getSex() == "male"):
+        if(self.race == "human" or self.race == "shapechanger"):
+            if(self.sex == "male"):
                 return (random.choice(listNormalHeights))
-            if(self.getSex() != "male"):  # female, -4 inches
+            if(self.sex != "male"):  # female, -4 inches
                 return (self.calcNegHeightOffset(normHeight, 4))
 
-        if(self.getRace() == "orc"):
-            if(self.getSex() == "male"):  # male -4
+        if(self.race == "orc"):
+            if(self.sex == "male"):  # male -4
                 return (self.calcNegHeightOffset(normHeight, 4))
-            if(self.getSex() != "male"):  # female -6 inches
+            if(self.sex != "male"):  # female -6 inches
                 return (self.calcNegHeightOffset(normHeight, 6))
 
-        if(self.getRace() == "elf"):
-            if(self.getSex() == "male"):  # male +4 inches
+        if(self.race == "elf"):
+            if(self.sex == "male"):  # male +4 inches
                 return (self.calcPosHeightOffset(normHeight, 5))
-            if(self.getSex() != "male"):  # female +2 inches
+            if(self.sex != "male"):  # female +2 inches
                 return (self.calcPosHeightOffset(normHeight, 2))
 
         #list of heights - shortfolk
-        if(self.getRace() == "dwarf"):
-            if(self.getSex() == "male"):
+        if(self.race == "dwarf"):
+            if(self.sex == "male"):
                 return (random.choice(listShortHeights))
-            if(self.getSex() != "male"):  # female -2 inches
+            if(self.sex != "male"):  # female -2 inches
                 return (self.calcNegHeightOffset(shortHeight, 2))
 
-        if(self.getRace() == "halfling"):
-            if(self.getSex() == "male"):  # male -12
+        if(self.race == "halfling"):
+            if(self.sex == "male"):  # male -12
                 return (self.calcNegHeightOffset(shortHeight, 12))
-            if(self.getSex() != "male"):  # female -13 inches
+            if(self.sex != "male"):  # female -13 inches
                 return (self.calcNegHeightOffset(shortHeight, 13))
 
         #list of heights - giants
-        if(self.getRace() == "hill giant"):
-            if(self.getSex() == "male"):
+        if(self.race == "hill giant"):
+            if(self.sex == "male"):
                 return (random.choice(listGiantHeights))
-            if(self.getSex() != "male"):  # female -4 inches
+            if(self.sex != "male"):  # female -4 inches
                 return (self.calcNegHeightOffset(giantHeight, 4))
+
+    def calcWeight(self):
+        # list of heights for normal size
+        if(self.race == "human" or self.race == "orc" or self.race == "elf" or self.race == "shapechanger"):
+            if(self.ht == "4'6"):
+                return(random.randint(70, 125))
+            if(self.ht in ["4'7", "4'8", "4'9"]):
+                return(random.randint(80, 140))
+            if(self.ht in ["4'10", "4'11", "5'0"]):
+                return(random.randint(90, 155))
+            if(self.ht in ["5'1", "5'2", "5'3"]):  # begin
+                return(random.randint(100, 170))
+            if(self.ht in ["5'4", "5'5", "5'6"]):
+                return(random.randint(110, 185))
+            if(self.ht in ["5'7", "5'8", "5'9"]):
+                return(random.randint(120, 200))
+            if(self.ht in ["5'10", "5'11", "6'0"]):
+                return(random.randint(130, 220))
+            if(self.ht in ["6'1", "6'2", "6'3"]):  # end
+                return(random.randint(145, 240))
+            if(self.ht in ["6'4", "6'5", "6'6"]):
+                return(random.randint(160, 260))
+            if(self.ht in ["6'7", "6'8"]):
+                return(random.randint(175, 280))
+
+            # list of heights for small size
+        if(self.race == "dwarf" or self.race == "halfling"):
+            if(self.ht == "2'6"):
+                return(random.randint(15, 35))
+            if(self.ht in ["2'7", "2'8", "9'9"]):
+                return(random.randint(25, 50))
+            if(self.ht in ["2'10", "2'11", "3'0"]):
+                return(random.randint(35, 65))
+            if(self.ht in ["3'1", "3'2", "3'3"]):
+                return(random.randint(45, 80))
+            if(self.ht in ["3'4", "3'5", "3'6"]):
+                return(random.randint(55, 95))
+            if(self.ht in ["3'7", "3'8", "3'9"]):  # begin
+                return(random.randint(65, 110))
+            if(self.ht in ["3'10", "3'11", "4'0"]):
+                return(random.randint(75, 125))
+            if(self.ht in ["4'1", "4'2", "4'3"]):
+                return(random.randint(85, 140))
+            if(self.ht in ["4'4", "4'5", "4'6"]):
+                return(random.randint(95, 155))
+            if(self.ht in ["4'7", "4'8", "4'9"]):  # end
+                return(random.randint(105, 170))
+
+            # list of heights for giant size
+        if(self.race == "hill giant"):
+            if(self.ht in ["8'0", "8'1", "8'2", "8'3", "8'4"]):
+                return(random.randint(295, 490))
+            if(self.ht in ["8'5", "8'6", "8'7", "8'8"]):
+                return(random.randint(335, 555))
+            if(self.ht in ["8'9", "8'10", "8'11", "9'0"]):
+                return(random.randint(375, 625))
+            if(self.ht in ["9'1", "9'2", "9'3", "9'4"]):
+                return(random.randint(420, 700))
+            if(self.ht in ["9'5", "9'6", "9'7", "9'8"]):
+                return(random.randint(465, 780))
+
+    def calcAge(self):
+        if(self.race == "human"):
+            return(random.randint(16, 90))
+        if(self.race == "shapechanger"):
+            return(random.randint(16, 55))
+        if(self.race == "orc"):
+            return(random.randint(12, 45))
+        if(self.race == "elf"):
+            return(random.randint(30, 10000))
+        if(self.race == "dwarf"):
+            return(random.randint(20, 125))
+        if(self.race == "halfling"):
+            return(random.randint(21, 80))
+        if(self.race == "hill giant"):
+            return(random.randint(26, 475))
 
     def calcNegHeightOffset(self, height, offset):
         newheight = height.split("'")  # split the ft and inches
@@ -538,8 +609,8 @@ class Character:
         #randomly pick one
         self.race = random.choice(raceList)
         self.na = int(0)
-        #rand range 20+
-        self.age = int(random.randrange(20, 50))
+        #working
+        self.setAge(self.calcAge())
         #rand 1 or 2
         sexChoice = int(random.randrange(0, 1))
         if(sexChoice == 1):
@@ -555,8 +626,6 @@ class Character:
             self.hand = "ambidextrous"
         else:
             self.hand = "right"
-        #look into this later
-        self.wt = int(random.randrange(65, 150))
         # 4d5+3 = pb
         d1 = random.randrange(1, 5)
         d2 = random.randrange(1, 5)
@@ -572,7 +641,8 @@ class Character:
         self.calcRacial(self.race)
         self.setEP(2500)
         self.advep = 1250
-        self.ht = self.calcHeightAndWeight()
+        self.setHeight(self.calcHeight())
+        self.setWeight(self.calcWeight())
 
     #generate a random player character
     #generate stats
