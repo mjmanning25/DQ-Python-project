@@ -432,10 +432,16 @@ class Character:
         shortHeight = random.choice(listShortHeights)
         giantHeight = random.choice(listGiantHeights)
 
-        #each height gets a range of weights
-        #has to be done in sets of 3 bc this game is bs
-        if(self.getRace() == "human" or self.getRace() == "shapechanger"):
+        #height range
+        normalRangeLower = 100
+        normalRangerUpper = 240
+        shortRangeLower = 165
+        shortRangerUpper = 170
+        giantRangeLower = 295
+        giantRangerUpper = 780
 
+        # list of heights for normal size
+        if(self.getRace() == "human" or self.getRace() == "shapechanger"):
             if(self.getSex() == "male"):
                 return (random.choice(listNormalHeights))
             if(self.getSex() != "male"):  # female, -4 inches
@@ -444,37 +450,32 @@ class Character:
         if(self.getRace() == "orc"):
             if(self.getSex() == "male"):  # male -4
                 return (self.calcNegHeightOffset(normHeight, 4))
-
             if(self.getSex() != "male"):  # female -6 inches
                 return (self.calcNegHeightOffset(normHeight, 6))
 
         if(self.getRace() == "elf"):
             if(self.getSex() == "male"):  # male +4 inches
                 return (self.calcPosHeightOffset(normHeight, 5))
-
             if(self.getSex() != "male"):  # female +2 inches
                 return (self.calcPosHeightOffset(normHeight, 2))
 
-            #list of heights - shortfolk
+        #list of heights - shortfolk
         if(self.getRace() == "dwarf"):
             if(self.getSex() == "male"):
                 return (random.choice(listShortHeights))
-
             if(self.getSex() != "male"):  # female -2 inches
                 return (self.calcNegHeightOffset(shortHeight, 2))
 
         if(self.getRace() == "halfling"):
             if(self.getSex() == "male"):  # male -12
                 return (self.calcNegHeightOffset(shortHeight, 12))
-
             if(self.getSex() != "male"):  # female -13 inches
                 return (self.calcNegHeightOffset(shortHeight, 13))
 
-            #list of heights - giants
+        #list of heights - giants
         if(self.getRace() == "hill giant"):
             if(self.getSex() == "male"):
                 return (random.choice(listGiantHeights))
-
             if(self.getSex() != "male"):  # female -4 inches
                 return (self.calcNegHeightOffset(giantHeight, 4))
 
