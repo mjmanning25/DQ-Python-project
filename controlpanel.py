@@ -77,6 +77,7 @@ def myInput():
 
 
 def menu():
+    os.system('cls')
     tryLoadChar()
     print("Speedy's Digital DQ sheet")
     print("--------------------------------")
@@ -88,7 +89,7 @@ def menu():
 def ranking_menu():
     os.system('cls')
     print("DQ Ranking Menu")
-    print("----------------------------------------------------------------------")
+    print("--------------------------------")
     print("Your EP is: " + str(selectedChar.getEP()))
     print("Your SP is: " + str(selectedChar.getSP()))
     print("Adventure Time to spend is unknown")
@@ -98,7 +99,7 @@ def ranking_menu():
     print("to view ranking, type: 'view'")
     print("to add a single new entry, type: 'add'")
     print("to leave this menu, type: 'q'")
-    print("----------------------------------------------------------------------")
+    print("--------------------------------")
     ranking_input()
     
 def ranking_input():
@@ -111,9 +112,13 @@ def ranking_input():
         ranking_input()
     elif(com[0] == "add" and len(com) == 1):
         ranking_add()
+        ranking_input()
+    elif(com[0] == "view" and len(com) == 1):
+        ranking_view()
+        ranking_input()
     elif(com[0] == "q" and len(com) == 1):
-        ranking_menu()
-        myInput()
+        menu()
+        doSaveChar()
     else:
        ranking_input()
 
@@ -130,15 +135,19 @@ def ranking_add():
     sp = input("SP Cost: > ")
     time = input("Time Cost: > ")
     print("Adding: " + name)
-    selectedChar.rankinglog.append(rankingchoice.RankingChoice(name, ep, sp, time))
+    thing = rankingchoice.RankingChoice(name, ep, sp, time)
+    selectedChar.rankinglog.append(thing)
+    print(selectedChar.rankinglog)
     ranking_input()
 
 def ranking_remove():
     return
 
 def ranking_view():
-    for rankingchoice in selectedChar.rankinglog:
-        print()
+    print("NAME \t\t| EP \t\t| SP \t\t| TIME")
+    print("--------------------------------")
+    for x in selectedChar.rankinglog:
+        print(x.getname() + " \t\t| " +  x.getepcost() + " \t\t| " + x.getspcost() + " \t\t| " + x.gettimecost())
     
     
     # add things to calculate

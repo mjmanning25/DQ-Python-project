@@ -1,9 +1,15 @@
 class RankingChoice:
-    def __init__(self, name):
+    def __init__(self, name, epcost, spcost, timecost):
         self.name = name
-        self.epcost = 0
-        self.spcost = 0
-        self.timecost = 0 # days
+        self.epcost = epcost
+        self.spcost = spcost
+        self.timecost = timecost # days
+    
+    def setname(self, name):
+        self.name = name
+        
+    def getname(self):
+        return self.name
     
     def setepcost(self,ep):
         self.epcost = ep
