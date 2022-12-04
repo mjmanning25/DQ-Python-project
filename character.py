@@ -1,6 +1,7 @@
 import random
 import college
 import raceability
+import language
 
 
 raceList = [
@@ -32,7 +33,9 @@ class Character:
         self.name = name
         self.rabilities = []  # racial abilities list
         self.adventureskills = []  # adventure skills list
+        self.colleges = []
         self.ep = 0
+        self.sp = 500
         self.advep = 0
         self.wt = 0
         self.ht = "?"
@@ -196,10 +199,10 @@ class Character:
       return self.languages
 
     def setLanguages(self, language, rank):
-        self.languages[0] = Language(language, rank)
+        self.languages[0] = self.Language(language, rank)
 
     def addLanguages(self, language, rank):
-        self.languages.append(Language(language, rank))
+        self.languages.append(self.Language(language, rank))
 
     #adventuring skills---------------------------------------------------------
 
@@ -209,10 +212,10 @@ class Character:
       return self.colleges
 
     def setColleges(self, college):
-        self.colleges[0] = College(college)
+        self.colleges[0] = self.College(college)
 
     def addColleges(self, college):
-        self.colleges.append(College(college))
+        self.colleges.append(self.College(college))
 
     #Experience points----------------------------------------------------------
     def getEP(self):
@@ -220,18 +223,25 @@ class Character:
 
     def setEP(self, ep):
         self.ep = ep
+        
+    #Silver Pennies-------------------------------------------------------------
+    def getSP(self):
+      return self.sp
+
+    def setSP(self, sp):
+        self.sp = sp
 
     def create(self):
         self.level = "bunny"
         self.setAllBaseStats()
         self.setAllOtherStats()
-        self.calcSexMod(self.sex)
+        #self.calcSexMod(self.sex)
         self.calcFt(self.en)
-        self.calcRacial(self.race)
+        #self.calcRacial(self.race)
         self.setEP(2500)
         self.advep = 1250
-        self.ht = self.calcHeight()
-        self.wt = self.calcWeight()
+        #self.ht = self.calcHeight()
+        #self.wt = self.calcWeight()
 
     def setAllBaseStats(self):
         self.ps = int(input("PS: "))
@@ -594,9 +604,9 @@ class Character:
 
         self.level = "Bunny"
         if(name == "" or name == None):
-            self.name = self.createRandomName()
+            self.setName(self.createRandomName())
         else:
-            self.name = name
+            self.setName(name)
         self.ps = int(random.randrange(13, 16))
         self.md = int(random.randrange(13, 16))
         self.ag = int(random.randrange(13, 16))

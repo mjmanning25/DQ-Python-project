@@ -23,6 +23,7 @@ allStats = [
 
 
 def myInput():
+    '''handle the input of the main menu, split via spaces'''
     com = input("> ").split(" ")
     if(com[0] == "save" and len(com) == 1):
         doSaveChar()
@@ -61,6 +62,9 @@ def myInput():
     elif(com[0] == "view" and len(com) == 1):
         showStats()
         myInput()
+    elif(com[0] == "ranking" and len(com) == 1):
+        ranking_menu()
+        myInput()
     elif(com[0] == "q" and len(com) == 1):
         doSaveChar()
         exit()
@@ -80,6 +84,38 @@ def menu():
     #print(selectedChar.getRAbilities())
     myInput()
 
+def ranking_menu():
+    os.system('cls')
+    print("DQ Ranking Menu")
+    print("----------------------------------------------------------------------")
+    print("Your EP is: " + str(selectedChar.getEP()))
+    print("Your SP is: " + str(selectedChar.getSP()))
+    print("Adventure Time to spend is unknown")
+    print("")
+    print("to begin ranking, type: 'start'")
+    print("to leave this menu, type: 'q'")
+    print("----------------------------------------------------------------------")
+    ranking_input()
+    
+def ranking_input():
+    com = input("> ").split(" ")
+    if(com[0] == "start" and len(com) == 1):
+        ranking_start()
+        ranking_input()
+    elif(com[0] == "q" and len(com) == 1):
+        menu()
+        myInput()
+    else:
+       ranking_input()
+
+def ranking_start():
+# add things to calculate
+# - name
+# - ep cost
+# - sp cost
+# - time cost
+
+# calculate
 
 def tryLoadChar():
     global selectedChar
@@ -121,10 +157,7 @@ def doNewChar():
 def doNewRandChar(name):
     global selectedChar
     print("Generating a new random bunny character!")
-    if(name == "" or name == None):
-        player = character.Character(input("Name (leave blank for random): "))
-    else:
-        player = character.Character(name)
+    player = character.Character(name)
     print("Generating...")
     player.createRandom(name)
     selectedChar = player
@@ -346,7 +379,7 @@ def help():
     print("--------------------------------")
     print("[1.] new - generate a new char sheet")
     print("[2.] load - load an existing char sheet")
-    print("[3.] random - generate a new random char sheet")
+    print("[3.] random [name]- generate a new random char sheet")
     print("[4.] save - save your current char sheet")
     print("[5.] get [stat] - displays your current stat value")
     print("[6.] [stat] - same as 'get [stat]'")
