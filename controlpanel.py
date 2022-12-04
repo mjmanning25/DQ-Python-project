@@ -88,7 +88,7 @@ def menu():
 
 def ranking_menu():
     os.system('cls')
-    print("DQ Ranking Menu")
+    print("DQ Ranking Menu - " + selectedChar.getName())
     print("--------------------------------")
     print("Your EP is: " + str(selectedChar.getEP()))
     print("Your SP is: " + str(selectedChar.getSP()))
@@ -116,9 +116,15 @@ def ranking_input():
     elif(com[0] == "view" and len(com) == 1):
         ranking_view()
         ranking_input()
+    elif(com[0] == "delete" and len(com) == 1):
+        ranking_remove(int(input("enter a #: > ")))
+        ranking_input()   
+    elif(com[0] == "delete" and len(com) == 2):
+        ranking_remove(com[1])
+        ranking_input()    
     elif(com[0] == "q" and len(com) == 1):
-        menu()
         doSaveChar()
+        menu()
     else:
        ranking_input()
 
@@ -142,17 +148,25 @@ def ranking_add():
     #print(selectedChar.rankinglog)
     ranking_input()
 
-def ranking_remove():
-    return
+def ranking_remove(index):
+    print("Removing "+ selectedChar.rankinglog[int(index)] +"...")
+    try:
+        selectedChar.rankinglog.pop(int(index))
+        print("Done!")
+    except:
+        print("Error deleting "+ selectedChar.rankinglog[int(index)])
 
 def ranking_view():
     print("NAME \t\t| EP \t\t| SP \t\t| TIME \t\t| P. RANK \t\t| C. RANK")
     print("------------------------------------------------------------------------------------------------")
+    i = 0
     for x in selectedChar.rankinglog:
         try:
-            print(x.getname() + " \t\t| " +  x.getepcost() + " \t\t| " + x.getspcost() + " \t\t| " + x.gettimecost()+ " \t\t| " + x.getprev() + " \t\t| " + x.getcurrent())
+            print(str(i) + ")" + x.getname() + " \t\t\t| " +  x.getepcost() + " \t\t| " + x.getspcost() + " \t\t| " + x.gettimecost()+ " \t\t| " + x.getprev() + " \t\t| " + x.getcurrent())
         except:
-            print(x.getname() + " has an error")
+            print(str(i) + ")" +x.getname() + " has an error")
+        
+        i = i + 1
     
     # add things to calculate
     # - name
