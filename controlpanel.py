@@ -93,7 +93,10 @@ def ranking_menu():
     print("Your SP is: " + str(selectedChar.getSP()))
     print("Adventure Time to spend is unknown")
     print("")
-    print("to begin ranking, type: 'start'")
+    print("to start ranking, type: 'start'")
+    print("to stop ranking, type: 'stop'")
+    print("to view ranking, type: 'view'")
+    print("to add a single new entry, type: 'add'")
     print("to leave this menu, type: 'q'")
     print("----------------------------------------------------------------------")
     ranking_input()
@@ -101,21 +104,41 @@ def ranking_menu():
 def ranking_input():
     com = input("> ").split(" ")
     if(com[0] == "start" and len(com) == 1):
-        ranking_start()
+        ranking_control(True)
         ranking_input()
+    elif(com[0] == "stop" and len(com) == 1):
+        ranking_control(False)
+        ranking_input()
+    elif(com[0] == "add" and len(com) == 1):
+        ranking_add()
     elif(com[0] == "q" and len(com) == 1):
-        menu()
+        ranking_menu()
         myInput()
     else:
        ranking_input()
 
-def ranking_start():
-    if (selectedChar.rankinglog):
-        changelog = selectedChar.rankinglog
-    else:
-        changelog = []
+def ranking_control(begin):
+    while(begin):
+        ranking_add()
     
-    
+def ranking_add():
+    print("--------------------------------")
+    name = input("Name: > ")
+    if name == "q":
+        ranking_control(False)
+    ep = input("EP Cost: > ")
+    sp = input("SP Cost: > ")
+    time = input("Time Cost: > ")
+    print("Adding: " + name)
+    selectedChar.rankinglog.append(rankingchoice.RankingChoice(name, ep, sp, time))
+    ranking_input()
+
+def ranking_remove():
+    return
+
+def ranking_view():
+    for rankingchoice in selectedChar.rankinglog:
+        print()
     
     
     # add things to calculate
@@ -125,7 +148,6 @@ def ranking_start():
     # - time cost
 
     # calculate
-    return
 
 def tryLoadChar():
     global selectedChar
