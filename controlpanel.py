@@ -10,6 +10,7 @@ import transformation
 import character
 import raceability
 import formula
+import rankingchoice
 
 global selectedChar
 
@@ -109,13 +110,22 @@ def ranking_input():
        ranking_input()
 
 def ranking_start():
-# add things to calculate
-# - name
-# - ep cost
-# - sp cost
-# - time cost
+    if (selectedChar.rankinglog):
+        changelog = selectedChar.rankinglog
+    else:
+        changelog = []
+    
+    
+    
+    
+    # add things to calculate
+    # - name
+    # - ep cost
+    # - sp cost
+    # - time cost
 
-# calculate
+    # calculate
+    return
 
 def tryLoadChar():
     global selectedChar

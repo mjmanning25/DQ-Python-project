@@ -34,6 +34,7 @@ class Character:
         self.rabilities = []  # racial abilities list
         self.adventureskills = []  # adventure skills list
         self.colleges = []
+        self.rankinglog = []
         self.ep = 0
         self.sp = 500
         self.advep = 0
