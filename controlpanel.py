@@ -133,22 +133,26 @@ def ranking_add():
         ranking_control(False)
     ep = input("EP Cost: > ")
     sp = input("SP Cost: > ")
-    time = input("Time Cost: > ")
+    time = input("Time Cost (days): > ")
+    prev = input("Previous Rank: > ")
+    curr = input("Current Rank: > ")
     print("Adding: " + name)
-    thing = rankingchoice.RankingChoice(name, ep, sp, time)
+    thing = rankingchoice.RankingChoice(name, ep, sp, time, prev, curr)
     selectedChar.rankinglog.append(thing)
-    print(selectedChar.rankinglog)
+    #print(selectedChar.rankinglog)
     ranking_input()
 
 def ranking_remove():
     return
 
 def ranking_view():
-    print("NAME \t\t| EP \t\t| SP \t\t| TIME")
-    print("--------------------------------")
+    print("NAME \t\t| EP \t\t| SP \t\t| TIME \t\t| P. RANK \t\t| C. RANK")
+    print("------------------------------------------------------------------------------------------------")
     for x in selectedChar.rankinglog:
-        print(x.getname() + " \t\t| " +  x.getepcost() + " \t\t| " + x.getspcost() + " \t\t| " + x.gettimecost())
-    
+        try:
+            print(x.getname() + " \t\t| " +  x.getepcost() + " \t\t| " + x.getspcost() + " \t\t| " + x.gettimecost()+ " \t\t| " + x.getprev() + " \t\t| " + x.getcurrent())
+        except:
+            print(x.getname() + " has an error")
     
     # add things to calculate
     # - name
